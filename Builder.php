@@ -15,6 +15,9 @@ class Query
 
     public function select(...$columns)
     {
+        if (empty($columns)) {
+            $columns = ['*'];
+        }
         $this->query = "SELECT " . implode(', ', $columns) . " FROM {$this->table}";
         return $this;
     }
@@ -62,7 +65,7 @@ class Query
 }
 
 $query = Query::table('users')
-    ->select('id', 'name')
+    ->select('id', 'name', 'surname')
     ->where('id', Query::EQUAL, 1)
     ->andWhere('name', 'LIKE', '%Elbek%')
     ->orWhere('surname', Query::EQUAL, 'Khamdullaev')
